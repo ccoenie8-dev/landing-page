@@ -188,6 +188,7 @@ nav {
 .hero-image {
     flex: 1;
     max-width: 50%;
+    padding-top: 40px;
 }
 
 .hero-image img {
