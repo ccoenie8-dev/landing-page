@@ -1,0 +1,12 @@
+{
+  "name": "sweet-layers-landing",
+  "version": "1.0.0",
+  "description": "Custom cake business landing page",
+  "main": "index.html",
+  "scripts": {
+    "build": "echo 'No build required'"
+  },
+  "dependencies": {
+    "resend": "^4.0.0"
+  }
+}
