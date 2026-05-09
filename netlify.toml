@@ -1,0 +1,7 @@
+[build]
+  publish = "."
+  command = "echo 'No build required for static site'"
+  functions = "netlify/functions"
+
+[functions]
+  directory = "netlify/functions"
