@@ -121,6 +121,11 @@ nav {
     color: var(--accent-gold);
 }
 
+.logo img {
+    max-height: 50px;
+    width: auto;
+}
+
 .nav-links {
     display: flex;
     list-style: none;
@@ -536,6 +541,11 @@ footer {
     font-weight: 700;
     color: var(--accent-gold);
     margin-bottom: 20px;
+}
+
+.footer-logo img {
+    max-height: 60px;
+    width: auto;
 }
 
 .footer-about p {
