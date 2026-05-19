@@ -5,15 +5,13 @@
     const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
     const RATE_LIMIT_MAX = 3;
 
-    const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
-    const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
+    const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png'];
     const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
     const MAGIC_BYTES = {
         'jpeg': [0xFF, 0xD8, 0xFF],
-        'png': [0x89, 0x50, 0x4E, 0x47],
-        'gif': [0x47, 0x49, 0x46],
-        'webp': [0x52, 0x49, 0x46, 0x46]
+        'png': [0x89, 0x50, 0x4E, 0x47]
     };
 
     function showMessage(message, type) {
@@ -134,6 +132,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        const facebookLink = document.querySelector('[data-social="facebook"]');
+        const facebookMeta = document.querySelector('meta[name="facebook-url"]');
+        if (facebookLink && facebookMeta) {
+            facebookLink.href = facebookMeta.getAttribute('content') || '#';
+        }
+
         const hamburger = document.querySelector('.hamburger');
         const navLinks = document.querySelector('.nav-links');
 

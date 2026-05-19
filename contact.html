@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact | Soet Anna</title>
-    <meta name="description" content="Request a custom cake - contact us for your order inquiry.">
+    <title>Order Custom Cake Swellendam | Soet Anna - Contact Us</title>
+    <meta name="description" content="Order your custom cake from Soet Anna serving Swellendam & surroundings. Birthday cakes, cupcakes, function cakes & kids cakes. Get your free quote today!">
+    <meta name="facebook-url" content="${FACEBOOK_URL}">
+    <meta property="og:title" content="Contact Soet Anna - Custom Cake Orders">
+    <meta property="og:description" content="Order your custom cake from Soet Anna in Swellendam & surroundings.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://soetanna.co.za/contact.html">
+    <link rel="canonical" href="https://soetanna.co.za/contact.html">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Bakery",
+        "name": "Soet Anna",
+        "description": "Handcrafted custom cakes for every celebration in Swellendam, South Africa.",
+        "url": "https://soetanna.co.za/",
+        "image": "https://soetanna.co.za/public/logo/logo.png",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Swellendam",
+            "addressRegion": "Western Cape",
+            "addressCountry": "ZA"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "{{PHONE_NUMBER}}",
+            "contactType": "Customer Service"
+        },
+        "areaServed": {
+            "@type": "GeoCircle",
+            "geoMidpoint": {
+                "@type": "GeoCoordinates",
+                "latitude": "-34.0236",
+                "longitude": "20.4410"
+            },
+            "geoRadius": "50000"
+        },
+        "priceRange": "$$"
+    }
+    </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -40,15 +77,19 @@
                     <div class="contact-details">
                         <div class="contact-item">
                             <div class="contact-icon">&#9742;</div>
-                            <span>(555) 123-4567</span>
+                            <span>{{PHONE_NUMBER}}</span>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon">&#9993;</div>
-                            <span>hello@sweetlayers.com</span>
+                            <span>{{PHONE_NUMBER}}</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">&#9993;</div>
+                            <span>{{EMAIL_ADDRESS}}</span>
                         </div>
                         <div class="contact-item">
                             <div class="contact-icon">&#9906;</div>
-                            <span>123 Baker Street, Sweet City, SC 12345</span>
+                            <span>{{ADDRESS}}</span>
                         </div>
                     </div>
                 </div>
@@ -68,7 +109,7 @@
 
                         <div class="form-group">
                             <label for="phone">Phone Number *</label>
-                            <input type="tel" id="phone" name="phone" placeholder="(555) 123-4567" required>
+                            <input type="tel" id="phone" name="phone" placeholder="07X XXX XXXX" required>
                         </div>
 
                         <div class="form-group">
@@ -77,10 +118,8 @@
                                 <option value="">Select a flavour</option>
                                 <option value="vanilla">Classic Vanilla</option>
                                 <option value="chocolate">Rich Chocolate</option>
-                                <option value="red-velvet">Red Velvet</option>
-                                <option value="lemon">Lemon Zest</option>
                                 <option value="carrot">Carrot Cake</option>
-                                <option value="marble">Marble Swirl</option>
+                                <option value="custard">Custard Cake</option>
                                 <option value="custom">Custom (specify below)</option>
                             </select>
                         </div>
@@ -88,7 +127,7 @@
                         <div class="form-group">
                             <label for="image">Reference Image</label>
                             <input type="file" id="image" name="image" accept="image/jpeg,image/jpg,image/png,image/gif,image/webp">
-                            <small style="color: var(--text-light); display: block; margin-top: 5px;">Upload a reference image showing how you'd like your cake to look (max 5MB)</small>
+                            <small style="color: var(--text-light); display: block; margin-top: 5px;">Upload a reference image showing how you'd like your cake to look (JPG/PNG only, max 5MB)</small>
                         </div>
 
                         <div class="form-group">
@@ -109,6 +148,7 @@
                 <div class="footer-about">
                     <div class="footer-logo"><img src="/public/logo/logo.png" alt="Soet Anna"></div>
                     <p>Creating beautiful memories, one slice at a time. Custom cakes crafted with passion since 2018.</p>
+                    <p style="margin-top: 10px; font-size: 14px;"><strong>📍 Serving:</strong> Swellendam & Surroundings</p>
                 </div>
                 <div class="footer-links">
                     <h4>Quick Links</h4>
@@ -122,9 +162,7 @@
                 <div class="footer-social">
                     <h4>Follow Us</h4>
                     <div class="social-icons">
-                        <a href="#" class="social-icon">IG</a>
-                        <a href="#" class="social-icon">FB</a>
-                        <a href="#" class="social-icon">PI</a>
+                        <a href="#" class="social-icon" data-social="facebook">FB</a>
                     </div>
                 </div>
             </div>
