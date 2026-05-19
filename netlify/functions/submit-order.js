@@ -208,7 +208,7 @@ ${imageData ? '\nNote: An image attachment was included' : ''}
 
         const emailOptions = {
             from: 'Cake Orders <onboarding@resend.dev>',
-            to: process.env.EMAIL_ADDRESS || 'ccoenie8@gmail.com',
+            to: process.env.EMAIL_ADDRESS,
             subject: `New Cake Order from ${fields.name}`,
             text: emailContent
         };

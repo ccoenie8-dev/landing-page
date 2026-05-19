@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const email = process.env.EMAIL_ADDRESS || 'ccoenie8@gmail.com';
-const phone = process.env.PHONE_NUMBER || '074 134 5051';
-const address = process.env.ADDRESS || '13 Jacaranda street, Swellendam, 6740';
+const email = process.env.EMAIL_ADDRESS || '';
+const phone = process.env.PHONE_NUMBER || '';
+const address = process.env.ADDRESS || '';
 const facebookUrl = process.env.FACEBOOK_URL || '';
 const srcDir = '.';
 const distDir = 'dist';
