@@ -102,6 +102,18 @@ const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
         return true;
     }
 
+    function fileToBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const base64 = reader.result.split(',')[1];
+                resolve(base64);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
     function validateForm() {
         const name = document.getElementById('name');
         const phone = document.getElementById('phone');
@@ -229,6 +241,26 @@ const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
                     }
                 }
 
+                const payload = {
+                    name: document.getElementById('name').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    flavour: document.getElementById('flavour').value,
+                    message: document.getElementById('message').value.trim(),
+                    website: document.getElementById('website').value.trim(),
+                    image: null
+                };
+
+                const fileInput = document.getElementById('image');
+                if (fileInput && fileInput.files && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const base64 = await fileToBase64(file);
+                    payload.image = {
+                        filename: file.name,
+                        contentType: file.type,
+                        content: base64
+                    };
+                }
+
                 const submitBtn = document.getElementById('submitBtn');
                 if (submitBtn) {
                     submitBtn.disabled = true;
@@ -240,7 +272,8 @@ const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
 
                 fetch('/.netlify/functions/submit-order', {
                     method: 'POST',
-                    body: new FormData(cakeForm)
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
                 }).then(response => {
                     if (response.ok) {
                         showMessage('Thank you! Your cake request has been submitted. We\'ll be in touch soon!', 'success');
