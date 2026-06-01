@@ -3,7 +3,7 @@
 
     const RATE_LIMIT_KEY = 'sweetLayers_rateLimit';
     const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
-    const RATE_LIMIT_MAX = 3;
+    const RATE_LIMIT_MAX = 10;
 
 const ALLOWED_EXTENSIONS = ['.jpg', '.jpeg', '.png'];
     const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png'];
