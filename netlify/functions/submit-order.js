@@ -51,46 +51,52 @@ function containsMaliciousContent(data, filename) {
     return patterns.some(pattern => pattern.test(strData));
 }
 
-function parseFormData(body) {
+function getBoundary(contentType) {
+    const match = contentType.match(/boundary=([^;]+)/);
+    if (!match) return null;
+    return match[1].replace(/^"|"$/g, '');
+}
+
+function parseFormData(body, contentType) {
+    const boundary = getBoundary(contentType);
+    if (!boundary) {
+        return { fields: {}, imageData: null, imageFilename: null, imageContentType: null, imageSize: 0 };
+    }
+
+    const delimiter = `--${boundary}`;
+    const parts = body.split(delimiter);
+
     const fields = {};
     let imageData = null;
     let imageFilename = null;
     let imageContentType = null;
     let imageSize = 0;
 
-    const parts = body.split('----FormBoundary');
-
     for (const part of parts) {
-        if (!part.includes('Content-Disposition')) continue;
+        const trimmed = part.trim();
+        if (trimmed === '' || trimmed === '--' || !part.includes('Content-Disposition')) continue;
 
-        const nameMatch = part.match(/name="([^"]+)"/);
-        const filenameMatch = part.match(/filename="([^"]+)"/);
-        const contentTypeMatch = part.match(/Content-Type: ([^\r\n]+)/);
+        const headerEnd = part.indexOf('\r\n\r\n');
+        if (headerEnd === -1) continue;
 
+        const headers = part.substring(0, headerEnd);
+        const content = part.substring(headerEnd + 4);
+
+        const nameMatch = headers.match(/name="([^"]+)"/);
         if (!nameMatch) continue;
-
         const name = nameMatch[1];
+
+        const filenameMatch = headers.match(/filename="([^"]+)"/);
+        const ctMatch = headers.match(/Content-Type:\s*([^\r\n]+)/i);
 
         if (filenameMatch) {
             imageFilename = filenameMatch[1];
-            if (contentTypeMatch) {
-                imageContentType = contentTypeMatch[1];
-            }
-            const dataMatch = part.match(/\r\n\r\n([\s\S]*?)\r\n?$/);
-            if (dataMatch) {
-                const base64Data = dataMatch[1].trim();
-                try {
-                    imageData = Buffer.from(base64Data, 'base64');
-                    imageSize = imageData.length;
-                } catch (e) {
-                    imageData = null;
-                }
-            }
+            imageContentType = ctMatch ? ctMatch[1].trim() : 'application/octet-stream';
+            const cleanContent = content.replace(/\r\n--\s*$/, '').replace(/\r\n$/, '');
+            imageData = Buffer.from(cleanContent, 'binary');
+            imageSize = imageData.length;
         } else {
-            const valueMatch = part.match(/\r\n\r\n([\s\S]*?)$/);
-            if (valueMatch) {
-                fields[name] = valueMatch[1].trim();
-            }
+            fields[name] = content.replace(/\r\n$/, '').trim();
         }
     }
 
@@ -115,7 +121,10 @@ exports.handler = async (event, context) => {
             };
         }
 
-        const { fields, imageData, imageFilename, imageContentType, imageSize } = parseFormData(event.body);
+        const rawBody = event.isBase64Encoded
+            ? Buffer.from(event.body, 'base64').toString('binary')
+            : event.body;
+        const { fields, imageData, imageFilename, imageContentType, imageSize } = parseFormData(rawBody, contentType);
 
         const honeypot = fields.website;
         if (honeypot && honeypot.trim() !== '') {
