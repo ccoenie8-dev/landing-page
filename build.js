@@ -1,14 +1,21 @@
 const fs = require('fs');
 const path = require('path');
 
-const email = process.env.EMAIL_ADDRESS || '';
+const email = process.env.EMAIL_TO || '';
 const phone = process.env.PHONE_NUMBER || '';
 const address = process.env.ADDRESS || '';
 const facebookUrl = process.env.FACEBOOK_URL || '';
 const srcDir = '.';
 const distDir = 'dist';
-const excludeDirs = ['dist', 'node_modules', '.next', '.git'];
-const excludeFiles = ['build.js'];
+const excludeDirs = ['dist', 'node_modules', '.next', '.git', 'app'];
+const excludeFiles = [
+  'build.js', '.env', '.gitignore',
+  'AGENTS.md', 'CLAUDE.md',
+  'eslint.config.mjs', 'postcss.config.mjs',
+  'next-env.d.ts', 'next.config.ts', 'tsconfig.json',
+  'package.json', 'package-lock.json',
+  'README.md'
+];
 
 function copyDir(src, dest) {
   fs.mkdirSync(dest, { recursive: true });
